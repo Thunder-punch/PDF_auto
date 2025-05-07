@@ -1,0 +1,1 @@
+pyinstaller --onefile main.py --add-data "resources;resources"

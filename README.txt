@@ -1,0 +1,103 @@
+하엘프랜즈에서 만든 PDF 생성 프로그램입니다.
+
+[실행 차단 해제 안내]
+
+Windows에서는 보안상의 이유로 서명되지 않은 설치파일을 차단할 수 있습니다.
+
+PDF사무자동화는 안전한 프로그램이며, 아래 방법으로 실행 차단을 해제할 수 있습니다.
+
+1. 설치파일에서 마우스 오른쪽 클릭 → '속성'
+2. '일반' 탭 아래 '차단 해제' 체크박스가 있으면 체크
+3. '적용' → '확인'
+
+또는 아래 메시지가 뜨는 경우:
+
+"Windows에서 PC를 보호했습니다"
+
+1. '추가 정보' 클릭
+2. '실행' 버튼 클릭
+
+이후 정상적으로 설치가 진행됩니다.
+
+
+[Windows Defender 예외 등록 안내]
+
+일부 Windows 환경에서는 설치 중 실행파일(main.exe)을 보안상 위협 요소로 인식할 수 있습니다.
+
+예외 등록 방법:
+
+1. 시작 메뉴에서 'Windows 보안' 검색 후 실행
+2. '바이러스 및 위협 방지' 클릭
+3. '설정 관리' 클릭
+4. '제외 추가 또는 제거' 클릭
+5. '제외 추가' → '폴더'
+6. 설치파일이 위치한 폴더(예: Downloads 또는 output) 선택
+
+위 설정 후 다시 설치파일을 실행하시면 정상적으로 동작합니다.
+
+
+PDF 양식에 적용된 변수는 아래와 같습니다.
+
+변수명 (Key) | 설명
+manage_id | 관리번호
+company_name | 사업장명
+company_address | 사업장 소재지
+business_id | 사업자 등록번호 (전체 입력)
+edit_corporate_id | 법인등록번호
+ceo_name | 대표자명
+edit_ceo_id | 대표자 주민등록번호
+edit_ceo_id_birth    대표자 생년월일
+edit_phone | 전화번호
+edit_cell     휴대전화번호
+edit_home   자택주소
+edit_po       직위 또는 직책
+edit_date | 작성일자 (예: 2025-04-15 등)
+edit_stamp 업체1,2인감
+eidt_purpose    CMS수납목적
+
+변수명 (Key) | 설명 
+manage_id_pdf | 관리번호
+company_name_pdf | 사업장명
+company_address_pdf | 사업장 소재지
+business_id_pdf | 사업자등록번호 (입력창)
+business_id_pdf_part1 | 사업자등록번호 앞 3자리 (출력용)
+business_id_pdf_part2 | 중간 2자리
+business_id_pdf_part3 | 뒤 5자리
+corporate_id_pdf | 법인등록번호
+ceo_business | 대표자명
+ceo_id_pdf | 대표자 주민등록번호 (입력창)
+ceo_id_pdf_part1 | 주민등록번호 앞 6자리
+ceo_id_pdf_part2 | 주민등록번호 뒤 7자리
+ceo_id_pdf_part2_1   주민등록번호 첫자리만 참조하는 변수(CMS용)
+ceo_birth_date 대표자 생년월일
+phone_pdf | 전화번호 (입력창)
+phone_pdf_part1 | 전화번호 앞자리 (예: 010)
+phone_pdf_part2 | 중간 자리 (예: 1234)
+phone_pdf_part3 | 뒷자리 (예: 5678)
+phone_pdf_emp    계약서 담당자 전화번호
+company_fax | 팩스
+company_email | 이메일
+num_employees | 상시근로자수
+business_type | 사업의 종류
+start_date_year | 사무처리 시작일 (연)
+start_date_month | 사무처리 시작일 (월)
+start_date_day | 사무처리 시작일 (일)
+payment_method | 결제방법 (Combobox: 4종류)
+ 		payment_method_cms
+		payment_method_card
+		payment_method_phone
+		payment_method_landline
+pay_company | 결제사명
+payment_date | 납부일
+validity_month | 유효기간 (월)
+validity_year | 유효기간 (년) ← 신규 추가
+payer_phone | 결제자 휴대전화번호
+payer_business | 결제자명
+payment_number | 결제번호
+amount | 납부금액
+date_pdf | 작성일자 (입력창: YYYY-MM-DD 등)
+date_pdf_year | 작성일자 - 년
+date_pdf_month | 작성일자 - 월
+date_pdf_day | 작성일자 - 일
+stamp 사업자 인감
+
