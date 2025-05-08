@@ -34,6 +34,7 @@ logs/
 *.7z
 *.exe
 *.spec
+resources/
 
 # Windows
 Thumbs.db
