@@ -59,7 +59,9 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-## 프로젝트 구조
+## 프로젝트 구조 및 데이터 흐름
+
+### 디렉토리 구조
 
 ```
 PDF_auto/
@@ -105,6 +107,17 @@ main.py (메인 진입점)
 4. 결과 저장 (output/ 디렉토리)
    - 생성된 PDF 저장
    - 로그 기록
+
+### 데이터/파일 흐름도
+
+```mermaid
+flowchart TD
+    A[사용자 입력<br>엑셀/수기 데이터] --> B[데이터 전처리 및 매핑<br>main.py, utils/]
+    B --> C[PDF 템플릿 로드<br>pdf/]
+    C --> D[PDF 자동 생성<br>reportlab, pdf/]
+    D --> E[결과물 저장<br>output/]
+    D --> F[로그 기록<br>logs/]
+```
 
 ## 사용 방법
 
