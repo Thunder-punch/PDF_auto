@@ -13,6 +13,7 @@ from utils.config import VERSION, RESOURCE_FONTS
 from ui.main_screen import App
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+import tkinter.font as tkfont
 
 def get_hardware_id():
     """
@@ -242,9 +243,31 @@ sys.stdout = TeeStream(sys.stdout, log_file)
 sys.stderr = TeeStream(sys.stderr, log_file)
 sys.excepthook = handle_unhandled
 
+def resource_path(relative_path):
+    # PyInstaller 환경 대응
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath('.'), relative_path)
+
+# Pretendard 폰트 등록 (tkinter)
+pretendard_path = resource_path('resources/fonts/PretendardVariable.ttf')
+try:
+    tkfont.nametofont("TkDefaultFont").configure(family="Pretendard")
+except Exception:
+    try:
+        tkfont.Font(root=None, name="Pretendard", family=pretendard_path)
+    except Exception:
+        pass
+
 # ─────────── 폰트 등록 ───────────
 logging.debug(f"프로그램 시작 (버전 {VERSION}): 폰트 등록을 시작합니다.")
 try:
+    pdfmetrics.registerFont(
+        TTFont('Pretendard', pretendard_path)
+    )
+    pdfmetrics.registerFont(
+        TTFont('PretendardBold', pretendard_path)
+    )
     pdfmetrics.registerFont(
         TTFont('NanumGothic', os.path.join(RESOURCE_FONTS, 'NanumGothic.ttf'))
     )

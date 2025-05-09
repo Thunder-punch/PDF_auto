@@ -14,4 +14,4 @@ RESOURCE_FONTS         = os.path.join(BASE_PATH, "resources", "fonts")
 RESOURCE_IMAGES        = os.path.join(BASE_PATH, "resources", "images")
 RESOURCE_PDF_TEMPLATES = os.path.join(BASE_PATH, "resources", "pdf_templates")
 
-VERSION = "1.2.1"
+VERSION = "1.2.2"

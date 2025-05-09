@@ -24,13 +24,34 @@ class App:
     def setup_style(self):
         self.style = ttk.Style(self.root)
         self.style.theme_use("clam")
-        # 전체 배경 흰색
-        self.style.configure(".", background="white")
-        self.style.configure("TFrame", background="white")
-        self.style.configure("TLabel", font=("NanumGothic", 14), background="white")
-        self.style.configure("Header.TLabel", font=("NanumGothicBold", 24), background="white")
-        # 버튼 스타일 원복: 기본 테두리 및 배경 유지
-        self.style.configure("TButton", font=("NanumGothic", 14), background="white")
+        # 전체 배경: 밝은 파스텔톤
+        self.style.configure(".", background="#F4F6FB")
+        self.style.configure("TFrame", background="#F4F6FB")
+        self.style.configure("TLabel", font=("Pretendard", 16), background="#F4F6FB", foreground="#222")
+        self.style.configure("Header.TLabel", font=("Pretendard", 28, "bold"), background="#F4F6FB", foreground="#5B8DEF")
+        # Soft 버튼: 라운드, 파스텔톤, 마이크로 인터랙션
+        self.style.configure("TButton",
+            font=("Pretendard", 16, "bold"),
+            background="#E9F0FB", foreground="#5B8DEF",
+            borderwidth=0, focusthickness=0, focuscolor="#5B8DEF", padding=12,
+            relief="flat"
+        )
+        self.style.map("TButton",
+            background=[
+                ("active", "#5B8DEF"),
+                ("pressed", "#5B8DEF"),
+                ("hover", "#D6E6FB"),
+                ("!active", "#E9F0FB")
+            ],
+            foreground=[
+                ("active", "#fff"),
+                ("pressed", "#fff"),
+                ("hover", "#5B8DEF"),
+                ("!active", "#5B8DEF")
+            ]
+        )
+        # Entry: 라운드, 연회색 배경, padding 넉넉히
+        self.style.configure("TEntry", font=("Pretendard", 15), fieldbackground="#F7FAFF", bordercolor="#D6E6FB", relief="flat", padding=10)
 
     def load_resources(self):
         logo_path = os.path.join(RESOURCE_IMAGES, "logo.png")
@@ -140,6 +161,9 @@ class App:
             )
             btn_pdf.grid(row=2, column=0, padx=10, pady=(0, 10), sticky="EW")
 
+        # 섹션 구분선 추가
+        ttk.Separator(self.main_frame, orient="horizontal").grid(row=3, column=0, sticky="ew", pady=16)
+
         # 피드백 안내
         label_error = ttk.Label(
             self.main_frame,
@@ -173,7 +197,7 @@ class App:
         # 버전 표시
         label_version = ttk.Label(
             self.main_frame,
-            text=f"버전 {VERSION}",
+            text=f"버전 1.2.2",
             style="TLabel",
             anchor="e",
             justify="right"

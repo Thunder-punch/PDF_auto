@@ -168,7 +168,7 @@ class PDFGenerationScreen:
 
     def _form_inputs(self):
         f = ttk.Frame(self.frame)
-        f.grid(row=2, column=0, padx=20, pady=10, sticky="NSEW")
+        f.grid(row=2, column=0, padx=2, pady=2, sticky="NSEW")
         row = 0
 
         # 기본 입력
@@ -185,41 +185,41 @@ class PDFGenerationScreen:
         row = self._entry(f, row, "법인등록번호", "corporate_id_pdf")
 
         # 사업자등록번호 3분할
-        ttk.Label(f, text="사업자등록번호").grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(f, text="사업자등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
         sub1 = ttk.Frame(f)
-        sub1.grid(row=row, column=1, sticky="EW", padx=10, pady=5)
+        sub1.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
         for i, width in enumerate((5,5,8), start=1):
             e = ttk.Entry(sub1, width=width)
             val = self.company_info.get(f"business_id_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=5)
+            e.pack(side="left", padx=1)
             self.entries[f"business_id_pdf_part{i}"] = e
         row += 1
 
         # 대표자 주민등록번호 2분할
-        ttk.Label(f, text="대표자 주민등록번호").grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(f, text="대표자 주민등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
         sub2 = ttk.Frame(f)
-        sub2.grid(row=row, column=1, sticky="EW", padx=10, pady=5)
+        sub2.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
         for i, width in enumerate((8,9), start=1):
             e = ttk.Entry(sub2, width=width)
             val = self.company_info.get(f"ceo_id_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=5)
+            e.pack(side="left", padx=1)
             self.entries[f"ceo_id_pdf_part{i}"] = e
         row += 1
 
         # 전화번호 3분할
-        ttk.Label(f, text="전화번호").grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(f, text="전화번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
         sub3 = ttk.Frame(f)
-        sub3.grid(row=row, column=1, sticky="EW", padx=10, pady=5)
+        sub3.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
         for i, width in enumerate((5,6,6), start=1):
             e = ttk.Entry(sub3, width=width)
             val = self.company_info.get(f"phone_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=5)
+            e.pack(side="left", padx=1)
             self.entries[f"phone_pdf_part{i}"] = e
         row += 1
 
@@ -256,23 +256,18 @@ class PDFGenerationScreen:
         row = self._date_entry(f, row, "작성일자", "date_pdf")
 
     def _entry(self, parent, row, label, key):
-        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=1)
         e = ttk.Entry(parent)
-
-        # ← 이 부분만 교체
         val = self.company_info.get(key, "")
         if val:
             e.insert(0, val)
-
-        e.grid(row=row, column=1, sticky="EW", padx=10, pady=5)
+        e.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
         self.entries[key] = e
         return row + 1
 
-
     def _date_entry(self, parent, row, label, key):
-        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=1)
         de = DateEntry(parent, date_pattern="yyyy-MM-dd", width=18)
-        
         if key == "start_date" and all(k in self.company_info for k in ("start_date_year","start_date_month","start_date_day")):
             y = int(self.company_info["start_date_year"])
             m = int(self.company_info["start_date_month"])
@@ -285,34 +280,34 @@ class PDFGenerationScreen:
             de.set_date(datetime.date(y, m, d))
         else:
             de.set_date(datetime.date.today())
-        de.grid(row=row, column=1, sticky="W", padx=10, pady=5)
+        de.grid(row=row, column=1, sticky="W", padx=2, pady=1)
         self.entries[key] = de
         return row + 1
 
     def _payment_method(self, parent, row):
-        ttk.Label(parent, text="결제방법").grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(parent, text="결제방법").grid(row=row, column=0, sticky="W", padx=2, pady=1)
         var = tk.StringVar(value=self.company_info.get("payment_method", "은행계좌(CMS)"))
         cmb = ttk.Combobox(parent, textvariable=var, width=34,
                            values=["은행계좌(CMS)", "신용카드", "휴대전화", "유선전화"])
-        cmb.grid(row=row, column=1, sticky="W", padx=10, pady=5)
+        cmb.grid(row=row, column=1, sticky="W", padx=2, pady=1)
         self.entries["payment_method"] = var
         return row + 1
 
     def _validity_row(self, parent, row):
-        ttk.Label(parent, text="유효기간(월/년)").grid(row=row, column=0, sticky="W", padx=10, pady=5)
+        ttk.Label(parent, text="유효기간(월/년)").grid(row=row, column=0, sticky="W", padx=2, pady=1)
         box = ttk.Frame(parent)
-        box.grid(row=row, column=1, sticky="W", padx=10, pady=5)
+        box.grid(row=row, column=1, sticky="W", padx=2, pady=1)
         m = ttk.Entry(box, width=5)
         val_m = self.company_info.get("validity_month", "")
         if val_m:
             m.insert(0, val_m)
-        m.pack(side="left", padx=5)
+        m.pack(side="left", padx=1)
         self.entries["validity_month"] = m
         y = ttk.Entry(box, width=5)
         val_y = self.company_info.get("validity_year", "")
         if val_y:
             y.insert(0, val_y)
-        y.pack(side="left", padx=5)
+        y.pack(side="left", padx=1)
         self.entries["validity_year"] = y
         return row + 1
 
@@ -486,5 +481,37 @@ class PDFGenerationScreen:
         root = self.parent.winfo_toplevel()  # ← 먼저 가져와야 함
         self.frame.destroy()
         show_main_screen(root)
+
+    def setup_style(self):
+        self.style = ttk.Style(self.parent)
+        self.style.theme_use("clam")
+        # 전체 배경: 밝은 파스텔톤
+        self.style.configure(".", background="#F4F6FB")
+        self.style.configure("TFrame", background="#F4F6FB")
+        self.style.configure("TLabel", font=("Pretendard", 16), background="#F4F6FB", foreground="#222")
+        self.style.configure("Header.TLabel", font=("Pretendard", 28, "bold"), background="#F4F6FB", foreground="#5B8DEF")
+        # Soft 버튼: 라운드, 파스텔톤, 마이크로 인터랙션
+        self.style.configure("TButton",
+            font=("Pretendard", 16, "bold"),
+            background="#E9F0FB", foreground="#5B8DEF",
+            borderwidth=0, focusthickness=0, focuscolor="#5B8DEF", padding=12,
+            relief="flat"
+        )
+        self.style.map("TButton",
+            background=[
+                ("active", "#5B8DEF"),
+                ("pressed", "#5B8DEF"),
+                ("hover", "#D6E6FB"),
+                ("!active", "#E9F0FB")
+            ],
+            foreground=[
+                ("active", "#fff"),
+                ("pressed", "#fff"),
+                ("hover", "#5B8DEF"),
+                ("!active", "#5B8DEF")
+            ]
+        )
+        # Entry: 라운드, 연회색 배경, padding 넉넉히
+        self.style.configure("TEntry", font=("Pretendard", 15), fieldbackground="#F7FAFF", bordercolor="#D6E6FB", relief="flat", padding=10)
 
 

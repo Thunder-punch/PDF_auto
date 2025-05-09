@@ -35,6 +35,7 @@ class EditInfoScreen:
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=0)
 
+        self.setup_style()
         self._build_ui()
         self._load_stamp_image()
 
@@ -171,4 +172,39 @@ class EditInfoScreen:
         root = self.parent.winfo_toplevel()  # ← 먼저 가져와야 함
         self.frame.destroy()
         show_main_screen(root)
+
+    def setup_style(self):
+        self.style = ttk.Style(self.parent)
+        self.style.theme_use("clam")
+        self.style.configure(".", background="#FFFFFF")
+        self.style.configure("TFrame", background="#FFFFFF")
+        self.style.configure("TLabel", font=("NanumGothic", 13), background="#FFFFFF", foreground="#222")
+        self.style.configure("Header.TLabel", font=("NanumGothicBold", 20), background="#FFFFFF", foreground="#222")
+        self.style.configure("TButton",
+            font=("NanumGothic", 13),
+            background="#FFFFFF", foreground="#222",
+            borderwidth=1, focusthickness=0, focuscolor="#60A5FA", padding=6,
+            relief="flat"
+        )
+        self.style.map("TButton",
+            background=[
+                ("active", "#60A5FA"),
+                ("pressed", "#60A5FA"),
+                ("hover", "#E3F0FF"),
+                ("!active", "#FFFFFF")
+            ],
+            foreground=[
+                ("active", "#fff"),
+                ("pressed", "#fff"),
+                ("hover", "#222"),
+                ("!active", "#222")
+            ],
+            bordercolor=[
+                ("active", "#60A5FA"),
+                ("pressed", "#60A5FA"),
+                ("hover", "#60A5FA"),
+                ("!active", "#D1D5DB")
+            ]
+        )
+        self.style.configure("TEntry", font=("NanumGothic", 12), fieldbackground="#FAFAFA", bordercolor="#E0E0E0", relief="flat")
 
