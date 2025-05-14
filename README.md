@@ -153,7 +153,23 @@ flowchart TD
 - 사용자 인터페이스 업데이트
 - 성능 최적화
 
-## 연락처
+## [2024-05-14 업데이트]
+- **UI/UX 개선**
+  - 모든 입력란(Entry, DateEntry, Combobox 등) 가로 길이 통일, 우측 끝선 정렬
+  - 분할 입력란(사업자등록번호, 주민등록번호, 전화번호, 유효기간)도 우측 끝선에 맞게 width 정수 조정
+  - 입력란, 라벨, 버튼, 체크박스 등 폰트 Pretendard로 완전 통일
+  - 라벨, 타이틀, 안내문 등 글씨 크기 일관성 유지 (타이틀: Pretendard 28 bold, 라벨: Pretendard 13)
+  - "생성할 PDF 항목 선택" 라벨 스타일 개선
+  - 인감 미리보기 상단 문구 "자문사 인감"으로 변경 및 중앙 정렬
+  - 전체 화면 세로 크기, 입력란 세로 간격 등 컴팩트하게 조정
 
+- **버그 수정**
+  - Entry width에 소수점 사용 시 발생하는 오류 수정 (정수로만 지정)
+  - 일부 화면에서 NanumGothic/NanumGothicBold → Pretendard로 일괄 변경
+
+- **배포/실행파일**
+  - PyInstaller로 단일 exe 생성 방법 안내 및 리소스 포함 옵션 추가
+
+## 연락처
 - 이메일: texclaim@naver.com
 - GitHub: [Thunder-punch](https://github.com/Thunder-punch) 

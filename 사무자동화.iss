@@ -1,11 +1,11 @@
 [Setup]
 AppName            = PDF사무자동화
-AppVersion         = 1.2.1
+AppVersion         = 1.2.2
 DefaultDirName     = {pf}\PDF사무자동화
 DefaultGroupName   = PDF사무자동화
 PrivilegesRequired = admin
 ArchitecturesInstallIn64BitMode=x64
-OutputDir          = C:\Users\texcl\HaelfriendsApp\output
+OutputDir          = .\output
 OutputBaseFilename = PDF사무자동화_설치파일
 Compression        = lzma
 SolidCompression   = yes
@@ -14,11 +14,11 @@ DisableProgramGroupPage = yes
 DisableFinishedPage     = yes
 
 [Files]
-Source: "C:\Users\texcl\HaelfriendsApp\dist\main.exe"; \
+Source: ".\dist\main.exe"; \
   DestDir: "{app}"; DestName: "PDF사무자동화.exe"; Flags: ignoreversion
-Source: "C:\Users\texcl\HaelfriendsApp\resources\*.*"; \
+Source: ".\resources\*.*"; \
   DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\texcl\HaelfriendsApp\README.txt"; \
+Source: ".\README.txt"; \
   DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]

@@ -78,10 +78,11 @@ class PDFGenerationScreen:
         # —————————————————————————————————————
         # 라벨과 입력필드 글씨 크기 통일
         style = ttk.Style()
-        # 라벨 폰트 (예: NanumGothic 12pt)  
-        style.configure('TLabel', font=('NanumGothic', 12))
-        # 입력필드 폰트 (예: NanumGothic 12pt)  
-        style.configure('TEntry', font=('NanumGothic', 12))
+        # 라벨 폰트 (예: NanumGothic 13pt)
+        style.configure('TLabel', font=('Pretendard', 13))
+        # 입력필드 폰트 및 패딩 최소화
+        style.configure('TEntry', font=('Pretendard', 11), padding=0)
+        style.configure('TCombobox', font=('Pretendard', 11), padding=0)
         # —————————————————————————————————————
 
         try:
@@ -94,6 +95,9 @@ class PDFGenerationScreen:
         except Exception:
             pass
 
+        style.configure('DocLabel.TLabelframe.Label', font=('Pretendard', 13), foreground='#222', background='#FFFFFF')
+        style.configure('Header.TLabel', font=('Pretendard', 28, 'bold'), background='#FFFFFF', foreground='#5B8DEF')
+
         self.parent  = parent
         self.company = company
 
@@ -105,8 +109,8 @@ class PDFGenerationScreen:
         # 3) 메인 프레임 생성
         self.frame = ttk.Frame(parent, style="TFrame")
         self.frame.grid(row=0, column=0, sticky="NSEW")
-        self.frame.columnconfigure(0, weight=1)
-        self.frame.columnconfigure(1, weight=0)
+        self.frame.columnconfigure(0, weight=0)
+        self.frame.columnconfigure(1, weight=1)
 
         # 4) 마지막 저장 폴더
         init_path = load_last_folder(company) or "(경로가 없으므로 비어있음)"
@@ -129,7 +133,7 @@ class PDFGenerationScreen:
     def _build_ui(self):
         # 창 크기 조정
         if isinstance(self.parent, tk.Tk):
-            self.parent.geometry("830x1350")
+            self.parent.geometry("830x890")
 
         self._header()
         self._doc_checkboxes()
@@ -148,7 +152,7 @@ class PDFGenerationScreen:
         ).grid(row=0, column=0, columnspan=2, pady=10, sticky="EW")
 
     def _doc_checkboxes(self):
-        lf = ttk.LabelFrame(self.frame, text="생성할 PDF 항목 선택", labelanchor="nw")
+        lf = ttk.LabelFrame(self.frame, text="생성할 PDF 항목 선택", labelanchor="nw", style="DocLabel.TLabelframe")
         lf.grid(row=1, column=0, padx=20, pady=(0,10), sticky="EW")
         inner = ttk.Frame(lf)
         inner.pack()
@@ -161,14 +165,20 @@ class PDFGenerationScreen:
             var = tk.IntVar(value=self.company_info.get(f"doc_{doc}", 0))
             tk.Checkbutton(
                 inner, text=doc, variable=var,
-                font=("NanumGothic", 14),
+                font=("Pretendard", 14),
                 indicatoron=False, padx=5, pady=5
             ).grid(row=0, column=col, padx=5)
             self.doc_vars[doc] = var
 
     def _form_inputs(self):
-        f = ttk.Frame(self.frame)
-        f.grid(row=2, column=0, padx=2, pady=2, sticky="NSEW")
+        # 입력 폼이 라벨 바로 오른쪽에 붙도록 column 설정 및 minsize 제거
+        self.frame.columnconfigure(0, weight=0)
+        self.frame.columnconfigure(1, weight=1)
+        outer = ttk.Frame(self.frame)
+        outer.grid(row=2, column=0, sticky="NW", padx=(40, 0), pady=2)
+        outer.columnconfigure(0, weight=0)
+        outer.columnconfigure(1, weight=1)
+        f = outer
         row = 0
 
         # 기본 입력
@@ -184,42 +194,42 @@ class PDFGenerationScreen:
         # 법인등록번호
         row = self._entry(f, row, "법인등록번호", "corporate_id_pdf")
 
-        # 사업자등록번호 3분할
-        ttk.Label(f, text="사업자등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
+        # 사업자등록번호 3분할 (width=9,10,9 → 합 28)
+        ttk.Label(f, text="사업자등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=2)
         sub1 = ttk.Frame(f)
-        sub1.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
-        for i, width in enumerate((5,5,8), start=1):
-            e = ttk.Entry(sub1, width=width)
+        sub1.grid(row=row, column=1, sticky="W", padx=2, pady=2)
+        for i, (col, w) in enumerate(zip([0, 1, 2], [9, 10, 9]), start=1):
+            e = ttk.Entry(sub1, width=w, font=("Pretendard", 11))
             val = self.company_info.get(f"business_id_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=1)
+            e.grid(row=0, column=col, sticky="W", padx=0, pady=2)
             self.entries[f"business_id_pdf_part{i}"] = e
         row += 1
 
-        # 대표자 주민등록번호 2분할
-        ttk.Label(f, text="대표자 주민등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
+        # 대표자 주민등록번호 2분할 (width=14,14 → 합 28, padx=0)
+        ttk.Label(f, text="대표자 주민등록번호").grid(row=row, column=0, sticky="W", padx=2, pady=2)
         sub2 = ttk.Frame(f)
-        sub2.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
-        for i, width in enumerate((8,9), start=1):
-            e = ttk.Entry(sub2, width=width)
+        sub2.grid(row=row, column=1, sticky="W", padx=2, pady=2)
+        for i, (col, w) in enumerate(zip([0, 1], [14, 14]), start=1):
+            e = ttk.Entry(sub2, width=w, font=("Pretendard", 11))
             val = self.company_info.get(f"ceo_id_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=1)
+            e.grid(row=0, column=col, sticky="W", padx=0, pady=2)
             self.entries[f"ceo_id_pdf_part{i}"] = e
         row += 1
 
-        # 전화번호 3분할
-        ttk.Label(f, text="전화번호").grid(row=row, column=0, sticky="W", padx=2, pady=1)
+        # 전화번호 3분할 (width=9,10,9 → 합 28, padx=0)
+        ttk.Label(f, text="전화번호").grid(row=row, column=0, sticky="W", padx=2, pady=2)
         sub3 = ttk.Frame(f)
-        sub3.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
-        for i, width in enumerate((5,6,6), start=1):
-            e = ttk.Entry(sub3, width=width)
+        sub3.grid(row=row, column=1, sticky="W", padx=2, pady=2)
+        for i, (col, w) in enumerate(zip([0, 1, 2], [9, 10, 9]), start=1):
+            e = ttk.Entry(sub3, width=w, font=("Pretendard", 11))
             val = self.company_info.get(f"phone_pdf_part{i}", "")
             if val:
                 e.insert(0, val)
-            e.pack(side="left", padx=1)
+            e.grid(row=0, column=col, sticky="W", padx=0, pady=2)
             self.entries[f"phone_pdf_part{i}"] = e
         row += 1
 
@@ -250,24 +260,26 @@ class PDFGenerationScreen:
         row = self._date_entry(f, row, "사무처리 시작일", "start_date")
         # 결제방법 (콤보박스만)
         row = self._payment_method(f, row)
-        # 유효기간(월/년)
+        # 유효기간(월/년) (10,10)
         row = self._validity_row(f, row)
         # 작성일자
         row = self._date_entry(f, row, "작성일자", "date_pdf")
 
     def _entry(self, parent, row, label, key):
-        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=1)
-        e = ttk.Entry(parent)
+        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=2)
+        parent.columnconfigure(1, weight=0)
+        e = ttk.Entry(parent, width=28, font=("Pretendard", 11))
         val = self.company_info.get(key, "")
         if val:
             e.insert(0, val)
-        e.grid(row=row, column=1, sticky="EW", padx=2, pady=1)
+        e.grid(row=row, column=1, sticky="W", padx=2, pady=2)
         self.entries[key] = e
         return row + 1
 
     def _date_entry(self, parent, row, label, key):
-        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=1)
-        de = DateEntry(parent, date_pattern="yyyy-MM-dd", width=18)
+        ttk.Label(parent, text=label).grid(row=row, column=0, sticky="W", padx=2, pady=2)
+        parent.columnconfigure(1, weight=0)
+        de = DateEntry(parent, date_pattern="yyyy-MM-dd", width=28, font=("Pretendard", 11))
         if key == "start_date" and all(k in self.company_info for k in ("start_date_year","start_date_month","start_date_day")):
             y = int(self.company_info["start_date_year"])
             m = int(self.company_info["start_date_month"])
@@ -280,34 +292,34 @@ class PDFGenerationScreen:
             de.set_date(datetime.date(y, m, d))
         else:
             de.set_date(datetime.date.today())
-        de.grid(row=row, column=1, sticky="W", padx=2, pady=1)
+        de.grid(row=row, column=1, sticky="W", padx=2, pady=2)
         self.entries[key] = de
         return row + 1
 
     def _payment_method(self, parent, row):
-        ttk.Label(parent, text="결제방법").grid(row=row, column=0, sticky="W", padx=2, pady=1)
+        ttk.Label(parent, text="결제방법").grid(row=row, column=0, sticky="W", padx=2, pady=2)
+        parent.columnconfigure(1, weight=0)
         var = tk.StringVar(value=self.company_info.get("payment_method", "은행계좌(CMS)"))
-        cmb = ttk.Combobox(parent, textvariable=var, width=34,
-                           values=["은행계좌(CMS)", "신용카드", "휴대전화", "유선전화"])
-        cmb.grid(row=row, column=1, sticky="W", padx=2, pady=1)
+        cmb = ttk.Combobox(parent, textvariable=var, width=28, font=("Pretendard", 11))
+        cmb.grid(row=row, column=1, sticky="W", padx=2, pady=2)
         self.entries["payment_method"] = var
         return row + 1
 
     def _validity_row(self, parent, row):
-        ttk.Label(parent, text="유효기간(월/년)").grid(row=row, column=0, sticky="W", padx=2, pady=1)
+        ttk.Label(parent, text="유효기간(월/년)").grid(row=row, column=0, sticky="W", padx=2, pady=2)
         box = ttk.Frame(parent)
-        box.grid(row=row, column=1, sticky="W", padx=2, pady=1)
-        m = ttk.Entry(box, width=5)
+        box.grid(row=row, column=1, sticky="W", padx=2, pady=2)
+        m = ttk.Entry(box, width=14, font=("Pretendard", 11))
         val_m = self.company_info.get("validity_month", "")
         if val_m:
             m.insert(0, val_m)
-        m.pack(side="left", padx=1)
+        m.grid(row=0, column=0, sticky="W", padx=0, pady=2)
         self.entries["validity_month"] = m
-        y = ttk.Entry(box, width=5)
+        y = ttk.Entry(box, width=14, font=("Pretendard", 11))
         val_y = self.company_info.get("validity_year", "")
         if val_y:
             y.insert(0, val_y)
-        y.pack(side="left", padx=1)
+        y.grid(row=0, column=1, sticky="W", padx=0, pady=2)
         self.entries["validity_year"] = y
         return row + 1
 
@@ -344,17 +356,19 @@ class PDFGenerationScreen:
         self._update_stamp_preview()
 
     def _build_stamp_preview(self):
-        pf = ttk.LabelFrame(self.right_col, text="인감", style="TFrame")
-        pf.pack(anchor="n")              # 버튼 바로 아래로
+        pf = ttk.LabelFrame(self.right_col, style="TFrame")
+        pf.pack(anchor="n")
+        # '자문사 인감' 라벨 추가 (가운데 상단, Pretendard 13)
+        ttk.Label(pf, text="자문사 인감", font=("Pretendard", 13), anchor="center", justify="center").pack(pady=(8, 0))
         self._preview_img_label = ttk.Label(pf)
         self._preview_img_label.pack(padx=10, pady=(10,5))
-        ttk.Label(pf, text="대표자명 입력시 도장생성", font=("NanumGothic", 10)).pack(pady=(0,10))
+        ttk.Label(pf, text="대표자명 입력시 도장생성", font=("Pretendard", 10)).pack(pady=(0,10))
         # 인감 날인 토글 버튼
         tk.Checkbutton(
             pf,
             text="인감 날인",
             variable=self.use_stamp_var,
-            font=("NanumGothic", 14),
+            font=("Pretendard", 14),
             indicatoron=False,
             padx=5, pady=5
         ).pack(pady=(0,10))
@@ -494,8 +508,8 @@ class PDFGenerationScreen:
         self.style.configure("TButton",
             font=("Pretendard", 16, "bold"),
             background="#E9F0FB", foreground="#5B8DEF",
-            borderwidth=0, focusthickness=0, focuscolor="#5B8DEF", padding=12,
-            relief="flat"
+            borderwidth=2, focusthickness=0, focuscolor="#5B8DEF", padding=12,
+            relief="solid", bordercolor="#888"
         )
         self.style.map("TButton",
             background=[
@@ -509,6 +523,12 @@ class PDFGenerationScreen:
                 ("pressed", "#fff"),
                 ("hover", "#5B8DEF"),
                 ("!active", "#5B8DEF")
+            ],
+            bordercolor=[
+                ("active", "#888"),
+                ("pressed", "#888"),
+                ("hover", "#888"),
+                ("!active", "#888")
             ]
         )
         # Entry: 라운드, 연회색 배경, padding 넉넉히

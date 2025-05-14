@@ -16,7 +16,7 @@ class EditInfoScreen:
         self.parent   = parent
         self.company  = company          # "업체1" 또는 "업체2"
         if isinstance(self.parent, tk.Tk):
-            self.parent.geometry("830x1350")
+            self.parent.geometry("830x890")
 
 
         # ── 상태값 ───────────────────────────────────────
@@ -64,25 +64,25 @@ class EditInfoScreen:
             ("직위 또는 직책", "edit_po"),
         ]:
             ttk.Label(parent, text=label, style="TLabel")\
-               .grid(row=row, column=0, padx=10, pady=8, sticky="W")
-            e = ttk.Entry(parent, font=("NanumGothic", 14))
+               .grid(row=row, column=0, padx=10, pady=2, sticky="W")
+            e = ttk.Entry(parent, font=("Pretendard", 11))
             if key in self.company_info:
                 e.insert(0, self.company_info[key])
-            e.grid(row=row, column=1, padx=10, pady=8, sticky="EW")
+            e.grid(row=row, column=1, padx=10, pady=2, sticky="EW", ipady=0)
             self.entries[key] = e
             row += 1
 
         # 작성일자
         ttk.Label(parent, text="작성일자", style="TLabel")\
-           .grid(row=row, column=0, padx=10, pady=8, sticky="W")
+           .grid(row=row, column=0, padx=10, pady=2, sticky="W")
         d = DateEntry(parent, width=32, date_pattern="yyyy-MM-dd",
-                      font=("NanumGothic", 14))
+                      font=("Pretendard", 11))
         try:
             d.set_date(self.company_info.get("edit_date",
                                              datetime.date.today()))
         except Exception:
             pass
-        d.grid(row=row, column=1, padx=10, pady=8, sticky="W")
+        d.grid(row=row, column=1, padx=10, pady=2, sticky="W", ipady=0)
         self.entries["edit_date"] = d
 
     def _build_folder_path(self, parent):
@@ -95,11 +95,11 @@ class EditInfoScreen:
 
     def _build_buttons(self, parent):
         btn = ttk.Frame(parent)
-        btn.grid(row=1002, column=0, columnspan=2, pady=20)
+        btn.grid(row=1002, column=0, columnspan=2, pady=8)
         ttk.Button(btn, text="메인 화면", command=self.go_back)\
-           .pack(side="left", padx=10, ipadx=10, ipady=5)
+           .pack(side="left", padx=6, ipadx=8, ipady=3)
         ttk.Button(btn, text="입력완료", command=self.save_info)\
-           .pack(side="left", padx=10, ipadx=10, ipady=5)
+           .pack(side="left", padx=6, ipadx=8, ipady=3)
 
     # ────────────────────────────────────────────────────────
     # 보조 메서드
@@ -125,15 +125,15 @@ class EditInfoScreen:
                 pass
 
         frame = ttk.Frame(self.frame)
-        frame.grid(row=1, column=1, padx=20, pady=20, sticky="N")
+        frame.grid(row=1, column=1, padx=20, pady=8, sticky="N")
         ttk.Label(frame, text=f"{self.company} 인감", style="TLabel")\
-           .pack(pady=(0, 5))
+           .pack(pady=(0, 2))
         if self.stamp_img:
             ttk.Label(frame, image=self.stamp_img).pack()
         tk.Checkbutton(frame, text="인감 날인",
                        variable=self.use_edit_stamp_var,
-                       font=("NanumGothic", 14), indicatoron=False,
-                       padx=5, pady=5).pack(pady=(5, 0))
+                       font=("Pretendard", 11), indicatoron=False,
+                       padx=5, pady=2).pack(pady=(2, 0))
 
     # ────────────────────────────────────────────────────────
     # 저장 / 이동
@@ -178,33 +178,33 @@ class EditInfoScreen:
         self.style.theme_use("clam")
         self.style.configure(".", background="#FFFFFF")
         self.style.configure("TFrame", background="#FFFFFF")
-        self.style.configure("TLabel", font=("NanumGothic", 13), background="#FFFFFF", foreground="#222")
-        self.style.configure("Header.TLabel", font=("NanumGothicBold", 20), background="#FFFFFF", foreground="#222")
+        self.style.configure("TLabel", font=("Pretendard", 13), background="#FFFFFF", foreground="#222")
+        self.style.configure("Header.TLabel", font=("Pretendard", 28, "bold"), background="#FFFFFF", foreground="#5B8DEF")
         self.style.configure("TButton",
-            font=("NanumGothic", 13),
-            background="#FFFFFF", foreground="#222",
-            borderwidth=1, focusthickness=0, focuscolor="#60A5FA", padding=6,
-            relief="flat"
+            font=("Pretendard", 16, "bold"),
+            background="#E9F0FB", foreground="#5B8DEF",
+            borderwidth=2, focusthickness=0, focuscolor="#5B8DEF", padding=12,
+            relief="solid", bordercolor="#888"
         )
         self.style.map("TButton",
             background=[
-                ("active", "#60A5FA"),
-                ("pressed", "#60A5FA"),
-                ("hover", "#E3F0FF"),
-                ("!active", "#FFFFFF")
+                ("active", "#5B8DEF"),
+                ("pressed", "#5B8DEF"),
+                ("hover", "#D6E6FB"),
+                ("!active", "#E9F0FB")
             ],
             foreground=[
                 ("active", "#fff"),
                 ("pressed", "#fff"),
-                ("hover", "#222"),
-                ("!active", "#222")
+                ("hover", "#5B8DEF"),
+                ("!active", "#5B8DEF")
             ],
             bordercolor=[
-                ("active", "#60A5FA"),
-                ("pressed", "#60A5FA"),
-                ("hover", "#60A5FA"),
-                ("!active", "#D1D5DB")
+                ("active", "#888"),
+                ("pressed", "#888"),
+                ("hover", "#888"),
+                ("!active", "#888")
             ]
         )
-        self.style.configure("TEntry", font=("NanumGothic", 12), fieldbackground="#FAFAFA", bordercolor="#E0E0E0", relief="flat")
+        self.style.configure("TEntry", font=("Pretendard", 11), fieldbackground="#F7FAFF", bordercolor="#D6E6FB", relief="flat", padding=0)
 

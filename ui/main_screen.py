@@ -12,7 +12,7 @@ class App:
         self.root = tk.Tk()
         self.root.title("사무자동화")
         self.root.minsize(1025, 500)
-        self.root.geometry("830x1350")
+        self.root.geometry("830x890")
         self.root.configure(bg="white")
 
         self.setup_style()
@@ -25,16 +25,16 @@ class App:
         self.style = ttk.Style(self.root)
         self.style.theme_use("clam")
         # 전체 배경: 밝은 파스텔톤
-        self.style.configure(".", background="#F4F6FB")
-        self.style.configure("TFrame", background="#F4F6FB")
-        self.style.configure("TLabel", font=("Pretendard", 16), background="#F4F6FB", foreground="#222")
-        self.style.configure("Header.TLabel", font=("Pretendard", 28, "bold"), background="#F4F6FB", foreground="#5B8DEF")
+        self.style.configure(".", background="#FFFFFF")
+        self.style.configure("TFrame", background="#FFFFFF")
+        self.style.configure("TLabel", font=("Pretendard", 16), background="#FFFFFF", foreground="#222")
+        self.style.configure("Header.TLabel", font=("Pretendard", 28, "bold"), background="#FFFFFF", foreground="#5B8DEF")
         # Soft 버튼: 라운드, 파스텔톤, 마이크로 인터랙션
         self.style.configure("TButton",
             font=("Pretendard", 16, "bold"),
             background="#E9F0FB", foreground="#5B8DEF",
-            borderwidth=0, focusthickness=0, focuscolor="#5B8DEF", padding=12,
-            relief="flat"
+            borderwidth=2, focusthickness=0, focuscolor="#5B8DEF", padding=12,
+            relief="solid", bordercolor="#888"
         )
         self.style.map("TButton",
             background=[
@@ -48,6 +48,12 @@ class App:
                 ("pressed", "#fff"),
                 ("hover", "#5B8DEF"),
                 ("!active", "#5B8DEF")
+            ],
+            bordercolor=[
+                ("active", "#888"),
+                ("pressed", "#888"),
+                ("hover", "#888"),
+                ("!active", "#888")
             ]
         )
         # Entry: 라운드, 연회색 배경, padding 넉넉히
@@ -138,7 +144,7 @@ class App:
             lbl = ttk.Label(
                 comp_frame,
                 text=company,
-                font=("NanumGothicBold", 18),
+                font=("Pretendard", 18, "bold"),
                 background="#F7F7F7"
             )
             lbl.grid(row=0, column=0, columnspan=2, sticky="W", padx=10, pady=10)
@@ -185,7 +191,7 @@ class App:
         label_footer = ttk.Label(
             self.main_frame,
             text=(
-                "하엘프랜즈 | 사람 곁의 AI\n"
+                "하엘프랜즈 | 기술 너머의 가치에 닿습니다.\n"
                 "Copyright ⓒ HaelFriends. All rights reserved."
             ),
             style="TLabel",
