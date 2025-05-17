@@ -148,7 +148,7 @@ flowchart TD
 
 ## 버전 정보
 
-현재 버전: v1.2.2
+현재 버전: v1.2.4
 - PDF 양식 자동 채우기 기능 개선
 - 사용자 인터페이스 업데이트
 - 성능 최적화
@@ -194,3 +194,12 @@ pyinstaller --noconsole --onefile main.py
 - Inno Setup(사무자동화.iss) 스크립트의 파일 경로를 절대경로(C:\Users\texcl\HaelfriendsApp)로 수정
 - README.txt 파일이 없어도 설치가 되도록 Source 라인 삭제
 - 기타: 빌드/설치 오류 발생 시, 관련 Source 라인 주석 처리 또는 빈 파일 생성으로 대응 
+
+## 필요 패키지 설치
+
+이 프로젝트에 필요한 모든 파이썬 패키지는 `requirements.txt` 파일에 정리되어 있습니다.
+아래 명령어로 한 번에 설치할 수 있습니다.
+
+```bash
+pip install -r requirements.txt
+``` 
