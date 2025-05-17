@@ -4,7 +4,7 @@ import zipfile
 import subprocess
 
 APP_NAME = "PDF사무자동화"
-VERSION = "v1.2.4"
+VERSION = "v1.2.5"
 ROOT_DIR = os.getcwd()
 DIST_DIR = os.path.join(ROOT_DIR, "dist")
 BUILD_DIR = os.path.join(ROOT_DIR, f"{APP_NAME}_{VERSION}")

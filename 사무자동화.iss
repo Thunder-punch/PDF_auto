@@ -1,6 +1,6 @@
 [Setup]
 AppName            = PDF사무자동화
-AppVersion         = 1.2.4
+AppVersion         = 1.2.5
 DefaultDirName     = {pf}\PDF사무자동화
 DefaultGroupName   = PDF사무자동화
 PrivilegesRequired = admin
