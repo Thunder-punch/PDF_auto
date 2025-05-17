@@ -301,6 +301,7 @@ class PDFGenerationScreen:
         parent.columnconfigure(1, weight=0)
         var = tk.StringVar(value=self.company_info.get("payment_method", "은행계좌(CMS)"))
         cmb = ttk.Combobox(parent, textvariable=var, width=28, font=("Pretendard", 11))
+        cmb['values'] = ["은행계좌(CMS)", "신용카드", "휴대전화", "유선전화"]
         cmb.grid(row=row, column=1, sticky="W", padx=2, pady=2)
         self.entries["payment_method"] = var
         return row + 1
@@ -428,9 +429,15 @@ class PDFGenerationScreen:
             "신용카드":"payment_method_card",
             "휴대전화":"payment_method_phone",
             "유선전화":"payment_method_landline"}
-        if pm in m:
-            merged.update({f"{m[pm]}_{i}":"√" for i in range(1,31)})
+        # 모든 결제방법 변수 초기화
+        for method in m.values():
+            for i in range(1, 31):
+                merged[f"{method}_{i}"] = ""  # 빈 값으로 초기화
 
+        # 선택한 결제방법만 체크
+        if pm in m:
+            for i in range(1, 31):
+                merged[f"{m[pm]}_{i}"] = "V"
 
         # 3-A) 대표자 주민번호 앞 6자리 → 생년월일
         front6 = merged.get("ceo_id_pdf_part1", "")
@@ -445,6 +452,8 @@ class PDFGenerationScreen:
         for key, val in list(merged.items()):
             # 이미 번호가 붙은 키나 불리언·딕트 등은 건너뜀
             if any(key.endswith(f"_{i}") for i in range(1, 31)):
+                continue
+            if key in m.values():  # 결제방법 체크 변수는 복제하지 않음
                 continue
             if not isinstance(val, str) or not val:
                 continue

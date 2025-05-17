@@ -14,6 +14,9 @@ from ui.main_screen import App
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import tkinter.font as tkfont
+import reportlab
+import reportlab.pdfgen
+import reportlab.lib
 
 def get_hardware_id():
     """

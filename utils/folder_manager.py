@@ -9,8 +9,8 @@ def make_folders(base_path, company_name):
         os.path.join("0. 기초자료", "필요자료"),
         "1. 기초컨설팅",
         "2. 급여대장",
-        "3. 4대보험 신고",
-        "4. 취업규칙"
+        "3. 지원금",
+        "4. 기타"
     ]
     for folder in folder_list:
         path = os.path.join(root_path, folder)

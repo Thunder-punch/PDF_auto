@@ -1,6 +1,6 @@
 [Setup]
 AppName            = PDF사무자동화
-AppVersion         = 1.2.2
+AppVersion         = 1.2.3
 DefaultDirName     = {pf}\PDF사무자동화
 DefaultGroupName   = PDF사무자동화
 PrivilegesRequired = admin
@@ -14,12 +14,10 @@ DisableProgramGroupPage = yes
 DisableFinishedPage     = yes
 
 [Files]
-Source: ".\dist\main.exe"; \
+Source: "C:\Users\texcl\HaelfriendsApp\dist\main.exe"; \
   DestDir: "{app}"; DestName: "PDF사무자동화.exe"; Flags: ignoreversion
-Source: ".\resources\*.*"; \
+Source: "C:\Users\texcl\HaelfriendsApp\resources\*.*"; \
   DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\README.txt"; \
-  DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\PDF사무자동화";        Filename: "{app}\PDF사무자동화.exe"

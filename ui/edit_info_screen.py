@@ -65,9 +65,21 @@ class EditInfoScreen:
         ]:
             ttk.Label(parent, text=label, style="TLabel")\
                .grid(row=row, column=0, padx=10, pady=2, sticky="W")
-            e = ttk.Entry(parent, font=("Pretendard", 11))
-            if key in self.company_info:
-                e.insert(0, self.company_info[key])
+            if key == "edit_ceo_id":
+                e = ttk.Entry(parent, font=("Pretendard", 11))
+                if key in self.company_info:
+                    e.insert(0, self.company_info[key])
+                def on_rrn_entry(event, entry=e):
+                    value = entry.get().replace("-", "")
+                    if len(value) > 6:
+                        value = value[:6] + "-" + value[6:]
+                    entry.delete(0, tk.END)
+                    entry.insert(0, value)
+                e.bind("<KeyRelease>", on_rrn_entry)
+            else:
+                e = ttk.Entry(parent, font=("Pretendard", 11))
+                if key in self.company_info:
+                    e.insert(0, self.company_info[key])
             e.grid(row=row, column=1, padx=10, pady=2, sticky="EW", ipady=0)
             self.entries[key] = e
             row += 1

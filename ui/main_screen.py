@@ -176,9 +176,9 @@ class App:
             text=(
                 "프로그램 사용 중 문제가 발생했다면 아래 로그 파일을 첨부하여 문의해 주세요.\n\n"
                 "▶ logs 폴더 내 로그 파일\n"
-                "   - pdf사무자동화_v1.2.1_날짜.txt\n\n"
+                "   - pdf사무자동화_v1.2.3_날짜.txt\n\n"
                 "▶ 문의 연락처\n"
-                "   - 이메일: jtw1508@naver.com\n"
+                "   - 이메일: haelfriends@naver.com\n"
                 "   - 전화번호: 070-8027-1477\n\n"
             ),
             style="TLabel",
@@ -203,7 +203,7 @@ class App:
         # 버전 표시
         label_version = ttk.Label(
             self.main_frame,
-            text=f"버전 1.2.2",
+            text=f"버전 1.2.3",
             style="TLabel",
             anchor="e",
             justify="right"

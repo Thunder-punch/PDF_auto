@@ -1,1 +1,7 @@
-pyinstaller --onefile main.py --add-data "resources;resources"
+pyinstaller --noconsole --onefile main.py
+
+# 또는
+# pyinstaller --windowed --onefile main.py
+
+# main.py 대신 실제 실행 진입점 파일명을 사용하세요.
+# --noconsole 옵션을 사용하면 실행 시 터미널(검은 창)이 뜨지 않습니다.

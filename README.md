@@ -172,4 +172,25 @@ flowchart TD
 
 ## 연락처
 - 이메일: texclaim@naver.com
-- GitHub: [Thunder-punch](https://github.com/Thunder-punch) 
+- GitHub: [Thunder-punch](https://github.com/Thunder-punch)
+
+## 실행파일 생성 명령어
+
+```
+pyinstaller --noconsole --onefile main.py
+
+# 또는
+# pyinstaller --windowed --onefile main.py
+
+# main.py 대신 실제 실행 진입점 파일명을 사용하세요.
+# --noconsole 옵션을 사용하면 실행 시 터미널(검은 창)이 뜨지 않습니다.
+```
+
+## 최근 주요 수정 내역 (2024-05-17)
+
+- 실행 오류 해결을 위해 requirements.txt에 다음 패키지 추가:
+  - Pillow, tkcalendar, pdfrw
+- PyInstaller 빌드 시 외부 라이브러리 누락 문제 해결
+- Inno Setup(사무자동화.iss) 스크립트의 파일 경로를 절대경로(C:\Users\texcl\HaelfriendsApp)로 수정
+- README.txt 파일이 없어도 설치가 되도록 Source 라인 삭제
+- 기타: 빌드/설치 오류 발생 시, 관련 Source 라인 주석 처리 또는 빈 파일 생성으로 대응 

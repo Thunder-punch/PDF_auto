@@ -3,4 +3,7 @@ PyPDF2==3.0.1
 reportlab==4.0.4
 python-dotenv==1.0.0
 requests==2.31.0
-pyinstaller==6.1.0 
+pyinstaller==6.1.0
+Pillow 
+tkcalendar
+pdfrw
